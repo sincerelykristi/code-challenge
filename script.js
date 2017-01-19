@@ -10,6 +10,13 @@
 
 var drop_handler;
 var allowdrop;
+var drag = function(ev){
+  console.log('in drag');
+  console.log('drag ev:');
+  console.log(ev);
+  ev.dataTransfer.setData("text", ev.target.id);
+
+};
 
 $( document ).ready(function() {
   console.log( "all systems go!" );
@@ -40,10 +47,10 @@ var ajaxCall = function() {
     for (var i = 0; i < albums.length; i++) {
       if (albums[i].userId === 1) {
         $(".table1").append(
-          "<div class='row' draggable='true'><div class='id-column'><p>" + albums[i].id + "</p></div><div class='title-column'><p>" + albums[i].title + "</p></div></div>")
+          "<div class='row' id='" + albums[i].id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>" + albums[i].id + "</p></div><div class='title-column'><p>" + albums[i].title + "</p></div></div>")
       } if (albums[i].userId === 2) {
         $(".table2").append(
-          "<div class='row' draggable='true' ondragstart=''><div class='id-column'><p>"
+          "<div class='row' id='" + albums[i].id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>"
            + albums[i].id +
            "</p></div><div class='title-column'><p>"
             + albums[i].title +
@@ -81,6 +88,11 @@ var ajaxCall = function() {
     drop_handler = function(ev){
       ev.preventDefault();
       console.log('drop_hanlder');
+      console.log('ev.dataTransfer:');
+      console.log(ev.dataTransfer);
+      console.log('ev.dataTransfer.getData("text"):')
+      console.log(ev.dataTransfer.getData("text"));
+
     }
 
     allowdrop = function(ev){
