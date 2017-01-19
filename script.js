@@ -1,3 +1,16 @@
+// var drop_handler = function(ev){
+//   ev.preventDefault();
+//   console.log('hitting drop_handler');
+// };
+
+// var allowdrop = function(ev){
+//   ev.preventDefault();
+//   console.log('hitting allowdrop');
+// }
+
+var drop_handler;
+var allowdrop;
+
 $( document ).ready(function() {
   console.log( "all systems go!" );
 
@@ -64,6 +77,20 @@ var ajaxCall = function() {
     }
 
     getAlbumInfo();
+
+    drop_handler = function(ev){
+      ev.preventDefault();
+      console.log('drop_hanlder');
+    }
+
+    allowdrop = function(ev){
+      ev.preventDefault();
+      console.log('allowdrop');
+    }
+
+    // function drop_handler(ev) {
+    // console.log("Drop");
+    // }
 
     // $("div.row").mousedown(function(){
     //   console.log("MouseDown!");
