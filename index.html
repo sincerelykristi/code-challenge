@@ -18,7 +18,7 @@
 <section>
 
 <!-- User w/ id: 1 Table and associated Albums -->
-  <div id="table1" class="table table1">
+  <div id="table1" class="table table1" ondrop="drop_handler(event)" ondragover="allowdrop(event)"">
     <div class="table-header">
       <h3 class="user1">User 1</h3>
     </div>
@@ -35,7 +35,7 @@
 <!-- **************** -->
 
 <!-- User w/ id: 2 Table and associated Albums -->
-  <div id="table2" ondrop="drop_handler(event)" ondragover="allowdrop(event)"class="table table2">
+  <div id="table2" ondrop="drop_handler(event)" ondragover="allowdrop(event)" class="table table2">
     <div class="table-header">
       <h3 class="user2">User 2</h3>
     </div>

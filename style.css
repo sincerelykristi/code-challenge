@@ -55,10 +55,6 @@ section {
   margin-bottom: 200px;
 }
 
-/* .table:hover {
-  box-shadow: 0px 0px 75px 15px rgba(0,0,0,0.75);
-} */
-
 /* Header featuring user names */
 .table-header {
   font-family: 'Poppins', sans-serif;
@@ -118,6 +114,10 @@ section {
   display: inline-flex;
   font-family: 'Poppins', sans-serif;
   cursor: move;
+}
+
+.row:nth-child(odd) {
+    background: #000000;
 }
 
 /* Cell with Album ID */

@@ -39,6 +39,7 @@ var ajaxCall = function() {
       if (albums[i].userId === 1) {
         $(".table1").append(
           "<div class='row' id='" + albums[i].id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>" + albums[i].id + "</p></div><div class='title-column'><p>" + albums[i].title + "</p></div></div>")
+        // candyStripe();
       } if (albums[i].userId === 2) {
         $(".table2").append(
           "<div class='row' id='" + albums[i].id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>"
@@ -46,7 +47,7 @@ var ajaxCall = function() {
            "</p></div><div class='title-column'><p>"
             + albums[i].title +
             "</p></div></div>")
-
+        // candyStripe();
       }
     }
 
@@ -81,7 +82,7 @@ var ajaxCall = function() {
              "</p></div><div class='title-column'><p>"
               + data.title +
               "</p></div></div>")
-            $("div.row:odd").css("background-color", "#D9BA23");
+            // candyStripe();
           } else if (data.userId === 1) {
             $(".table1").append(
             "<div class='row' id='" + data.id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>" + data.id + "</p></div><div class='title-column'><p>" + data.title + "</p></div></div>")
@@ -111,8 +112,10 @@ var ajaxCall = function() {
   });
 }
 
-
-
+// var candyStripe = function(){
+//   console.log("candy!")
+//   $("div.row:odd").css("background-color", "#D9BA23");
+// }
 
 
  ajaxCall();
