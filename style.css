@@ -117,7 +117,7 @@ section {
 }
 
 .row:nth-child(odd) {
-    background: #000000;
+    background: #D9BA23;
 }
 
 /* Cell with Album ID */
