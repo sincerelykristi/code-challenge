@@ -50,6 +50,7 @@ section {
   height: 900px;
   overflow: scroll;
   display: flex;
+  align-content: flex-start;
   flex-wrap: wrap;
   flex-direction: row;
   margin-bottom: 200px;
