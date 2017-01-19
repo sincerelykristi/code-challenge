@@ -1,22 +1,13 @@
-// var drop_handler = function(ev){
-//   ev.preventDefault();
-//   console.log('hitting drop_handler');
-// };
 
-// var allowdrop = function(ev){
-//   ev.preventDefault();
-//   console.log('hitting allowdrop');
-// }
-
+// HTML5 drag and drop functions, called globally to get access to data
 var drop_handler;
 var allowdrop;
-var drag = function(ev){
-  console.log('in drag');
-  console.log('drag ev:');
-  console.log(ev);
-  ev.dataTransfer.setData("text", ev.target.id);
-
-};
+var drag;
+// variables for current dragged selection
+// var tableId = "";
+// var currentTable = "";
+// var currentAlbumId = "";
+// var currentAlbumTitle = "";
 
 $( document ).ready(function() {
   console.log( "all systems go!" );
@@ -44,7 +35,7 @@ var ajaxCall = function() {
     method: 'GET'
   }).then(function(albums){
 
-    for (var i = 0; i < albums.length; i++) {
+   for (var i = 0; i < albums.length; i++) {
       if (albums[i].userId === 1) {
         $(".table1").append(
           "<div class='row' id='" + albums[i].id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>" + albums[i].id + "</p></div><div class='title-column'><p>" + albums[i].title + "</p></div></div>")
@@ -55,69 +46,68 @@ var ajaxCall = function() {
            "</p></div><div class='title-column'><p>"
             + albums[i].title +
             "</p></div></div>")
-        $("div.row:odd").css("background-color", "#D9BA23");
+
       }
     }
 
-    var tableId = "";
-    var currentTable = "";
-    var currentAlbum = "";
-
-    var tableMouseOver = function(){
-      $(".table").mouseover(function(){
-        tableId = $(this).attr("id");
-        console.log(tableId + "Mouse Over!")
-       })
-    };
-
-    tableMouseOver();
-
-    var getAlbumInfo = function(){
-      $("div.row").mousedown(function(){
-        console.log("MouseDown!");
-        currentTable = $(this).parent().attr("id");
-        currentAlbum = $(this.firstChild.innerHTML).text();
-        console.log(currentTable);
-        console.log(currentAlbum);
-        // tableMouseOver();
-      })
-    }
-
-    getAlbumInfo();
-
     drop_handler = function(ev){
       ev.preventDefault();
-      console.log('drop_hanlder');
-      console.log('ev.dataTransfer:');
-      console.log(ev.dataTransfer);
-      console.log('ev.dataTransfer.getData("text"):')
-      console.log(ev.dataTransfer.getData("text"));
+      var table = ev.currentTarget;
+      var draggedRowId = ev.dataTransfer.getData("text");
+      var draggedRow = document.getElementById(draggedRowId);
+      var userId;
+      if (table.id === "table1"){
+        userId = 1;
+      }else if(table.id === "table2"){
+        userId = 2;
+      }else{
+        console.log('not found');
+      }
+      $.ajax('http://jsonplaceholder.typicode.com/albums/' + draggedRowId, {
+        method: 'PATCH',
+        data: {
+          "userId": userId,
+          "id": draggedRowId,
+        }
+      }).then(function(data) {
+        console.log('success!!!');
+        console.log(data);
+          if (data.userId === 2) {
+            console.log("#table1 .row#" + data.id)
+            $("#table1 .row#" + data.id).remove();
+            $(".table2").append(
+            "<div class='row' id='" + data.id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>"
+             + data.id +
+             "</p></div><div class='title-column'><p>"
+              + data.title +
+              "</p></div></div>")
+            $("div.row:odd").css("background-color", "#D9BA23");
+          } else if (data.userId === 1) {
+            $(".table1").append(
+            "<div class='row' id='" + data.id + "' draggable='true' ondragstart='drag(event)'><div class='id-column'><p>" + data.id + "</p></div><div class='title-column'><p>" + data.title + "</p></div></div>")
+          } else {
+            console.log("error! Can't append for some reason")
+          }
+
+      });
+
 
     }
 
     allowdrop = function(ev){
       ev.preventDefault();
       console.log('allowdrop');
+
     }
 
-    // function drop_handler(ev) {
-    // console.log("Drop");
-    // }
+    drag = function(ev){
+      console.log('in drag');
+      console.log('drag ev:');
+      console.log(ev);
+      ev.dataTransfer.setData("text", ev.target.id);
 
-    // $("div.row").mousedown(function(){
-    //   console.log("MouseDown!");
-    //   currentTable = $(this).parent().attr("id");
-    //   currentAlbum = $(this.firstChild.innerHTML).text();
-    //   console.log(currentTable);
-    //   console.log(currentAlbum);
-    //   // $("table").mouseover(function(){
-    //   //   var tableId = $(this).parent().attr("id");
-    //   //   console.log(tableId + "Mouse Over!")
-    //   //  })//.mouseup(function(){
-    //   //   $ajax.
-    //   // })// onMouseUp POST.then(ajaxCall())
+    };
 
-    // })
   });
 }
 
